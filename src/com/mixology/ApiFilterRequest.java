@@ -11,11 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 class ApiFilterRequest {
+    // Categories: https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list
+    // Ingredients: https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list
+    // Alcoholic: https://www.thecocktaildb.com/api/json/v1/1/list.php?a=list
 
-    public static void main(String[] args) {
-        sendRequest("https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list"); // categories
-        sendRequest("https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list"); // ingredients
-        sendRequest("https://www.thecocktaildb.com/api/json/v1/1/list.php?a=list"); // is alcoholic
+    private String urlString;
+
+    public ApiFilterRequest(String urlString) {
+        this.urlString = urlString;
     }
 
     /*
@@ -82,5 +85,9 @@ class ApiFilterRequest {
         System.out.println("Result: " + result);
 
         return result;
+    }
+
+    public String getUrlString() {
+        return urlString;
     }
 }
