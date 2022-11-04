@@ -1,4 +1,4 @@
-package com.mixology;
+package com.mixology.database;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
