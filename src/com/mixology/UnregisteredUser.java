@@ -6,4 +6,8 @@ public class UnregisteredUser implements User {
     public void search() {
 
     }
+
+//    public void guestHome() {
+//        // general search
+//    }
 }

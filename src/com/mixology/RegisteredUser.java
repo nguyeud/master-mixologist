@@ -10,7 +10,7 @@ public class RegisteredUser implements User {
     private String tagline;
 
     // pseudo
-//    private List<Database> drinks = new ArrayList<>();
+    private List<RegisteredUsers> drinks = new ArrayList<>();
 
     public RegisteredUser(String name, String tagline) {
         setName(name);
@@ -19,17 +19,12 @@ public class RegisteredUser implements User {
 
     @Override
     public void search() {
-
-    }
-
-    public void save() {
-
     }
 
     //pseudo
-//    public void save(Database drink) {
-//        drinks.add(drink);
-//    }
+    public void save(RegisteredUsers drink) {
+        drinks.add(drink);
+    }
 
     public void delete() {
 
