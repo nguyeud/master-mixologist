@@ -7,28 +7,22 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
-class ApiFilterRequest {
-    // Categories: https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list
-    // Ingredients: https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list
-    // Alcoholic: https://www.thecocktaildb.com/api/json/v1/1/list.php?a=list
+class SearchRequest {
+    // Fields
+    private static final String urlString = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
 
-    private String urlString;
-
-    public ApiFilterRequest(String urlString) {
-        this.urlString = urlString;
-    }
-
+    // Methods
     /*
      * Method to fetch data from the server
      */
-    private static List<Object> sendRequest(String urlString) {
-        List<Object> result = new ArrayList<>();
+    public static Map<String, String> sendRequest(String name) {
+        Map<String, String> map = new HashMap<>();
 
         try {
-            URL url = new URL(urlString);
+            URL url = new URL(urlString + name);
 
             // Open GET request to URL
             HttpURLConnection request = (HttpURLConnection) url.openConnection();
@@ -51,43 +45,17 @@ class ApiFilterRequest {
                 // In the API, "drinks" is the required object (this is the same among all the filters)
                 JSONArray dataArr = (JSONArray) dataObj.get("drinks");
 
-                // Get filter type
-                int index = urlString.indexOf("?");
-                String code = urlString.substring(index + 1, index + 2);
-                String filter;
-
-                switch (code) {
-                    case "c":
-                        filter = "strCategory";
-                        break;
-                    case "i":
-                        filter = "strIngredient1";
-                        break;
-                    case "a":
-                        filter = "strAlcoholic";
-                        break;
-                    default:
-                        filter = "";
-                        break;
-                }
-
                 // Iterate over array and add to the results List
                 for (int i = 0; i < dataArr.size(); i++) {
-                    JSONObject new_obj = (JSONObject) dataArr.get(i);
+                    JSONObject newObj = (JSONObject) dataArr.get(i);
 
-                    result.add(new_obj.get(filter));
+                    map.put((String) newObj.get("idDrink"), (String) newObj.get("strDrink"));
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        System.out.println("Result: " + result);
-
-        return result;
-    }
-
-    public String getUrlString() {
-        return urlString;
+        return map;
     }
 }
