@@ -1,5 +1,7 @@
 package com.mixology;
 
+import com.mixology.database.Recipe;
+
 import java.io.*;
 import java.util.*;
 
@@ -106,6 +108,16 @@ public class RegisteredUsers implements Comparable<RegisteredUsers> {
 
     public void setTagline(String tagline) {
         this.tagline = tagline;
+    }
+
+    private final List<Recipe> recipes = new ArrayList<>();
+
+    public void saveRecipe(Recipe recipe){
+        recipes.add(recipe);
+    }
+
+    public List<Recipe> getRecipes() {
+        return Collections.unmodifiableList(recipes);
     }
 
     @Override
