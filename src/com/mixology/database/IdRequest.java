@@ -60,8 +60,10 @@ public class IdRequest {
                     String ingredient = (String) newObj.get("strIngredient" + i);
                     String amount = (String) newObj.get("strMeasure" + i);
 
-                    if (ingredient != null) {
-                        rIngredients.add(amount + " - " + ingredient);
+                    if (ingredient != null && amount != null) {
+                        rIngredients.add(ingredient + " - " + amount);
+                    } else if (ingredient != null) {
+                        rIngredients.add(ingredient);
                     }
                 }
 

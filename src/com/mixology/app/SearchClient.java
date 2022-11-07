@@ -14,13 +14,13 @@ class SearchClient {
     }
 
     private static void promptForActionFromHome() {
-        String action = null;
         boolean validInput = false;
 
         while (!validInput) {
             System.out.println("What would you like to do? [S]earch or [F]avorites: ");
 
-            // TODO: maybe add logic that the user can exit anytime from the program by typing "exit"
+            // TODO: maybe add logic that the user can exit anytime from the program by typing "exit" to go to the
+            //  Goodbye method
 
             String input = scanner.nextLine().trim().toUpperCase();
 
@@ -30,7 +30,7 @@ class SearchClient {
                 if ("S".equals(input)) {
                     promptForCocktail();
                 } else {
-
+                    // TODO: go to favorites...
                 }
             }
         }
@@ -38,7 +38,6 @@ class SearchClient {
     }
 
     private static void promptForActionFromSearch(Map<String, String> cocktails) {
-        String action = null;
         boolean validInput = false;
 
         while (!validInput) {
@@ -62,7 +61,6 @@ class SearchClient {
     }
 
     private static void promptForActionFromSRecipe(Recipe recipe) {
-        String action = null;
         boolean validInput = false;
 
         while (!validInput) {
@@ -125,7 +123,7 @@ class SearchClient {
         boolean validInput = false;
 
         while (!validInput) {
-            if (cocktails.keySet().contains(input)) {
+            if (cocktails.containsKey(input)) {
                 recipe = IdRequest.sendRequest(Integer.parseInt(input));
                 validInput = true;
             } else {
@@ -141,8 +139,14 @@ class SearchClient {
         String border = "=";
         System.out.printf("=======%s\n", border.repeat(recipe.getName().length()));
 
-        // TODO: Create print of recipe...
-        System.out.println(recipe);
+        System.out.printf("Category: %s\n", recipe.getCategory());
+        System.out.printf("Alcoholic: %s\n", recipe.isAlcoholic());
+        System.out.println("Ingredients:");
+        for (int i = 0; i < recipe.getIngredientList().size(); i++) {
+            String point = String.valueOf(i + 1) + ". ";
+            System.out.println(point + recipe.getIngredientList().get(i));
+        }
+        System.out.printf("Instructions: %s\n", recipe.getInstructions());
 
         promptForActionFromSRecipe(recipe);
     }
