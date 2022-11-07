@@ -5,7 +5,8 @@ import java.util.*;
 
 public class RegisteredUsers implements Comparable<RegisteredUsers> {
     /*  Change the path statement in the next line to your file location */
-    private static final String csvFilePath = "master-mixologist\\src\\data\\MasterList.csv";
+//    private static final String csvFilePath = "master-mixologist\\src\\data\\MasterList.csv";
+    private static final String csvFilePath = "src/com/mixology/MasterList.csv";
 
 
     private static final String DELIMITER = ",";
