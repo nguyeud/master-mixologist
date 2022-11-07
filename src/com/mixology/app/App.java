@@ -6,6 +6,7 @@ import com.mixology.RegisteredUsers;
 import com.mixology.UnregisteredUser;
 import com.mixology.database.IdRequest;
 import com.mixology.database.Recipe;
+import com.mixology.database.Recipe.*;
 import com.mixology.database.SearchRequest;
 import com.mixology.database.SearchRequest.*;
 
@@ -16,6 +17,7 @@ import java.util.*;
 
 import static com.mixology.RegisteredUsers.ReadcsvFile;
 import static com.mixology.RegisteredUsers.VerifyUser;
+import static com.mixology.RegisteredUsers.*;
 
 public class App {
     private static final Scanner scanner = new Scanner(System.in);
@@ -133,7 +135,7 @@ public class App {
         }
     }
 
-    private  void promptForActionFromSRecipe(Recipe recipe) {
+    private  void promptForActionFromSRecipe(Recipe recipe, RegisteredUsers user) {
         boolean validInput = false;
 
         while (!validInput) {
@@ -152,7 +154,7 @@ public class App {
                         promptForActionFromHome();
                         break;
                     case "S":
-                        favorites.update(); // working on this
+                        update(user.getFirstName(), Recipe.getName()); // working on this
                         break;
                     // TODO: if [S], save recipe to their file
                     case "E":
@@ -261,7 +263,7 @@ public class App {
     }
 
 
-    private  void showFaves() {
+    private void showFaves() {
         favorites.showFaves();
     }
 
