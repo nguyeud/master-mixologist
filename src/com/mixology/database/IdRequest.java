@@ -10,7 +10,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-class IdRequest {
+public class IdRequest {
     // Fields
     private static final String urlString = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=";
 

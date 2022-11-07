@@ -2,7 +2,7 @@ package com.mixology.database;
 
 import java.util.List;
 
-class Recipe {
+public class Recipe {
     private String id;
     private String name;
     private String category;

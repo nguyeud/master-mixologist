@@ -9,8 +9,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
-class SearchRequest {
+public class SearchRequest {
     // Fields
     private static final String urlString = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
 
@@ -19,7 +20,7 @@ class SearchRequest {
      * Method to fetch data from the server
      */
     public static Map<String, String> sendRequest(String name) {
-        Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new TreeMap<>();
 
         try {
             URL url = new URL(urlString + name);
