@@ -88,13 +88,21 @@ class SearchClient {
 
     private static void promptForCocktail() {
         Map<String, String> cocktails = null;
+        boolean validInput = false;
 
-        System.out.println("Enter the name of the cocktail: ");
-        String input = scanner.nextLine().trim();
+        while (!validInput) {
+            System.out.println("Enter the name of the cocktail: ");
+            String input = scanner.nextLine().trim();
 
-        cocktails = SearchRequest.sendRequest(input);
+            cocktails = SearchRequest.sendRequest(input);
 
-        showCocktail(input, cocktails);
+            if (!cocktails.isEmpty()) {
+                showCocktail(input, cocktails);
+                validInput = true;
+            } else {
+                System.out.printf("No search results for %s were found. ", input);
+            }
+        }
     }
 
     private static void showCocktail(String input, Map<String, String> cocktails) {

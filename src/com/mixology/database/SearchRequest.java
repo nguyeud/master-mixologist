@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -46,11 +45,13 @@ public class SearchRequest {
                 // In the API, "drinks" is the required object (this is the same among all the filters)
                 JSONArray dataArr = (JSONArray) dataObj.get("drinks");
 
-                // Iterate over array and add to the results List
-                for (int i = 0; i < dataArr.size(); i++) {
-                    JSONObject newObj = (JSONObject) dataArr.get(i);
+                // Iterate over array and add to the results List if results != null
+                if (dataArr != null) {
+                    for (int i = 0; i < dataArr.size(); i++) {
+                        JSONObject newObj = (JSONObject) dataArr.get(i);
 
-                    map.put((String) newObj.get("idDrink"), (String) newObj.get("strDrink"));
+                        map.put((String) newObj.get("idDrink"), (String) newObj.get("strDrink"));
+                    }
                 }
             }
         } catch (Exception e) {
