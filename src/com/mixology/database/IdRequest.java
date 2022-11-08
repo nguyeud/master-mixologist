@@ -3,6 +3,12 @@ package com.mixology.database;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -53,6 +59,17 @@ public class IdRequest {
                 String rInstructions = (String) newObj.get("strInstructions");
                 boolean rIsAlcoholic = ((String) newObj.get("strAlcoholic")).equals("Alcoholic");
                 String rImage = (String) newObj.get("strDrinkThumb");
+
+                Image jFrameImage = ImageIO.read(new URL(rImage));
+                ImageIcon icon = new ImageIcon(jFrameImage);
+                JFrame frame = new JFrame();
+                frame.setLayout(new FlowLayout());
+                frame.setSize(400, 500);
+                JLabel label = new JLabel();
+                label.setIcon(icon);
+                frame.add(label);
+                frame.setVisible(true);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
                 // Iterate over ingredient to add to a list for Recipe class
                 List<String> rIngredients = new ArrayList<>();
