@@ -301,7 +301,7 @@ public class App {
     private void goodbye() {
         try {
             String greeting = Files.readString(Paths.get("Goodbye.txt"));
-            System.out.println(greeting);
+            System.out.println(ANSI_CYAN + greeting + ANSI_RESET);
         } catch (IOException e) {
             e.printStackTrace();
         }
