@@ -238,9 +238,11 @@ public class App {
     }
 
     private void showFaves() {
-        profile.showFavorites();
-
-        promptForActionFromSearch(profile.getFavorites(), "F");
+        if (profile.showFavorites()) {
+            promptForActionFromHome();
+        } else {
+            promptForActionFromSearch(profile.getFavorites(), "F");
+        }
     }
 
     private void goodbye() {

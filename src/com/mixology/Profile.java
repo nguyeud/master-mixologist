@@ -85,26 +85,34 @@ public class Profile implements Serializable {
         }
     }
 
-    public void showFavorites() {
+    public boolean showFavorites() {
         User user = profileMap.get(identifier);
         List<Recipe> recipes = user.getRecipes();
+        boolean isEmpty = false;
 
-        System.out.println("FAVORITE COCKTAILS");
-        System.out.println("==================");
+        if (user.getRecipes().isEmpty()) {
+            System.out.println("You do not have any saved favorites!");
+            isEmpty = true;
+        } else {
+            System.out.println("FAVORITE COCKTAILS");
+            System.out.println("==================");
 
-        List<Integer> stringLength = new ArrayList<>();
-        for (Recipe recipe : recipes) {
-            stringLength.add(recipe.getName().length());
+            List<Integer> stringLength = new ArrayList<>();
+            for (Recipe recipe : recipes) {
+                stringLength.add(recipe.getName().length());
+            }
+
+            int maxLength = Collections.max(stringLength);
+
+            System.out.printf("%-8s | %-10s\n", "ID", "Cocktail");
+            String border = "=";
+            System.out.printf("=========|%s\n", border.repeat(maxLength));
+            for (Recipe recipe : user.getRecipes()) {
+                System.out.printf("%-8s | %-10s\n", recipe.getId(), recipe.getName());
+            }
         }
 
-        int maxLength = Collections.max(stringLength);
-
-        System.out.printf("%-8s | %-10s\n", "ID", "Cocktail");
-        String border = "=";
-        System.out.printf("=========|%s\n", border.repeat(maxLength));
-        for (Recipe recipe : user.getRecipes()) {
-            System.out.printf("%-8s | %-10s\n", recipe.getId(), recipe.getName());
-        }
+        return isEmpty;
     }
 
     public Map<String, String> getFavorites() {
