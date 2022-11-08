@@ -1,12 +1,6 @@
 package com.mixology.database;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.io.IOException;
 import java.io.Serializable;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 
 public class Recipe implements Serializable {
