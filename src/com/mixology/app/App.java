@@ -63,7 +63,7 @@ public class App {
 
                 switch (input) {
                     case "S":
-                        promptForCocktail();
+                        promptForSearch();
                         break;
                     case "F":
                         showFaves();
@@ -110,7 +110,7 @@ public class App {
 
                     switch (input) {
                         case "B":
-                            promptForCocktail();
+                            promptForSearch();
                             break;
                         case "H":
                             promptForActionFromHome();
@@ -167,7 +167,7 @@ public class App {
 
                     switch(input) {
                         case "B":
-                            promptForCocktail();
+                            promptForSearch();
                             break;
                         case "H":
                             promptForActionFromHome();
@@ -190,6 +190,29 @@ public class App {
         profile.updateProfile(firstName, lastName, tagLine, recipe, id);
     }
 
+    private void promptForSearch() {
+        boolean validInput = false;
+
+        while (!validInput) {
+            System.out.println("Would you like to search by [C]ocktail name or [I]ngredient: ");
+
+            String input = scanner.nextLine().trim().toUpperCase();
+
+            if (input.matches("C|I")) {
+                validInput = true;
+
+                switch (input) {
+                    case "C":
+                        promptForCocktail();
+                        break;
+                    case "I":
+                        promptForIngredient();
+                        break;
+                }
+            }
+        }
+    }
+
     private void promptForCocktail() {
         Map<String, String> cocktails = null;
         boolean validInput = false;
@@ -199,6 +222,25 @@ public class App {
             String input = scanner.nextLine().trim();
 
             cocktails = SearchRequest.sendRequest(input);
+
+            if (!cocktails.isEmpty()) {
+                showCocktail(input, cocktails, "S");
+                validInput = true;
+            } else {
+                System.out.printf("No search results for %s were found. ", input);
+            }
+        }
+    }
+
+    private void promptForIngredient() {
+        Map<String, String> cocktails = null;
+        boolean validInput = false;
+
+        while (!validInput) {
+            System.out.println("Enter ingredient name: ");
+            String input = scanner.nextLine().trim();
+
+            cocktails = IngredientRequest.sendRequest(input);
 
             if (!cocktails.isEmpty()) {
                 showCocktail(input, cocktails, "S");

@@ -37,22 +37,23 @@ public class IngredientRequest {
             if (responseCode != 200) {
                 throw new RuntimeException("HttpResponseCode: " + responseCode);
             } else {
-                InputStreamReader inputStreamReader = new InputStreamReader((InputStream) request.getContent());
+                if (request.getContentLength() != -1) {
+                    InputStreamReader inputStreamReader = new InputStreamReader((InputStream) request.getContent());
 
-                // Map to JSON objects
-                System.out.println(inputStreamReader.read());
-                JSONObject dataObj = (JSONObject) new JSONParser().parse(inputStreamReader);
+                    // Map to JSON objects
+                    JSONObject dataObj = (JSONObject) new JSONParser().parse(inputStreamReader);
 
-                // Get the required object from the above create object
-                // In the API, "drinks" is the required object (this is the same among all the filters)
-                JSONArray dataArr = (JSONArray) dataObj.get("drinks");
+                    // Get the required object from the above create object
+                    // In the API, "drinks" is the required object (this is the same among all the filters)
+                    JSONArray dataArr = (JSONArray) dataObj.get("drinks");
 
-                // Iterate over array and add to the results List if results != null
-                if (dataArr != null) {
-                    for (int i = 0; i < dataArr.size(); i++) {
-                        JSONObject newObj = (JSONObject) dataArr.get(i);
+                    // Iterate over array and add to the results List if results != null
+                    if (dataArr != null) {
+                        for (int i = 0; i < dataArr.size(); i++) {
+                            JSONObject newObj = (JSONObject) dataArr.get(i);
 
-                        map.put((String) newObj.get("idDrink"), (String) newObj.get("strDrink"));
+                            map.put((String) newObj.get("idDrink"), (String) newObj.get("strDrink"));
+                        }
                     }
                 }
             }

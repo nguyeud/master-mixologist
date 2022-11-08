@@ -63,7 +63,7 @@ public class SearchRequest {
     public static void showCocktail(String input, Map<String, String> cocktails) {
         System.out.println("SEARCH RESULTS FOR: " + input.toUpperCase());
 
-        System.out.println("========================");
+        System.out.println("===================");
 
         List<Integer> cocktailLength = new ArrayList<>();
         for (String cocktail : cocktails.values()) {
