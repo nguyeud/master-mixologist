@@ -39,10 +39,20 @@ public class Profile implements Serializable {
         } else {
             profile = new Profile();
 
-            System.out.println("\nWELCOME NEW MEMBER! THANK YOU FOR REGISTERING! :).\n\n");
+            System.out.println("\nWELCOME NEW MEMBER! THANK YOU FOR REGISTERING! :)\n");
         }
 
         return profile;
+    }
+
+    public static boolean verifyProfileExistence() {
+        boolean exists = false;
+
+        if (Files.exists(Path.of(dataFilePath))) {
+            exists = true;
+        }
+
+        return exists;
     }
 
     private static String getFilePath(String firstName, String lastName, String tagline) {
@@ -88,7 +98,6 @@ public class Profile implements Serializable {
 
     public boolean showFavorites() {
         User user = profileMap.get(identifier);
-        List<Recipe> recipes = user.getRecipes();
         boolean isEmpty = false;
 
         if (user.getRecipes().isEmpty()) {
@@ -99,7 +108,7 @@ public class Profile implements Serializable {
             System.out.println("==================");
 
             List<Integer> stringLength = new ArrayList<>();
-            for (Recipe recipe : recipes) {
+            for (Recipe recipe : user.getRecipes()) {
                 stringLength.add(recipe.getName().length());
             }
 
@@ -122,7 +131,6 @@ public class Profile implements Serializable {
         Map<String, String> map = new TreeMap<>();
 
         User user = profileMap.get(identifier);
-        List<Recipe> recipes = user.getRecipes();
 
         for (Recipe recipe : user.getRecipes()) {
             map.put(recipe.getId(), recipe.getName());
