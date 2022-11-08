@@ -11,6 +11,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
+import static com.mixology.Profile.verifyProfileExistence;
+
 public class App {
     private static final Scanner scanner = new Scanner(System.in);
     private static Profile profile;
@@ -65,25 +67,45 @@ public class App {
 
     private void promptForActionFromHome() {
         boolean validInput = false;
+        boolean profileExists = verifyProfileExistence();
 
         while (!validInput) {
-            System.out.print("What would you like to do? [S]earch, [F]avorites, or [E]xit: ");
+            if (profileExists) {
+                System.out.print("What would you like to do? [S]earch, [F]avorites, or [E]xit: ");
 
-            String input = scanner.nextLine().trim().toUpperCase();
+                String input = scanner.nextLine().trim().toUpperCase();
 
-            if (input.matches("S|F|E")) {
-                validInput = true;
+                if (input.matches("S|F|E")) {
+                    validInput = true;
 
-                switch (input) {
-                    case "S":
-                        promptForSearch();
-                        break;
-                    case "F":
-                        showFaves();
-                        break;
-                    case "E":
-                        goodbye();
-                        break;
+                    switch (input) {
+                        case "S":
+                            promptForSearch();
+                            break;
+                        case "F":
+                            showFavorites();
+                            break;
+                        case "E":
+                            goodbye();
+                            break;
+                    }
+                }
+            } else {
+                System.out.print("What would you like to do? [S]earch or [E]xit: ");
+
+                String input = scanner.nextLine().trim().toUpperCase();
+
+                if (input.matches("S|E")) {
+                    validInput = true;
+
+                    switch (input) {
+                        case "S":
+                            promptForSearch();
+                            break;
+                        case "E":
+                            goodbye();
+                            break;
+                    }
                 }
             }
         }
@@ -161,11 +183,11 @@ public class App {
                             goodbye();
                             break;
                         case "F":
-                            showFaves();
+                            showFavorites();
                             break;
                         case "D":
                             updateProfile(firstName, lastName, tagLine, recipe, "D");
-                            showFaves();
+                            showFavorites();
                             break;
                     }
                 }
@@ -290,7 +312,7 @@ public class App {
         promptForActionFromRecipe(recipe, id);
     }
 
-    private void showFaves() {
+    private void showFavorites() {
         if (profile.showFavorites()) {
             promptForActionFromHome();
         } else {
@@ -302,6 +324,8 @@ public class App {
         try {
             String greeting = Files.readString(Paths.get("Goodbye.txt"));
             System.out.println(ANSI_CYAN + greeting + ANSI_RESET);
+            System.out.println(greeting);
+            System.exit(0);
         } catch (IOException e) {
             e.printStackTrace();
         }

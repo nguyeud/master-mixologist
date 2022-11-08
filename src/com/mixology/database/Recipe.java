@@ -1,7 +1,12 @@
 package com.mixology.database;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 public class Recipe implements Serializable {
@@ -34,12 +39,39 @@ public class Recipe implements Serializable {
         System.out.printf("Alcoholic: %s\n", recipe.isAlcoholic());
         System.out.println("Ingredients:");
         for (int i = 0; i < recipe.getIngredientList().size(); i++) {
-            String point = String.valueOf(i + 1) + ". ";
+            String point = i + 1 + ". ";
             System.out.println(point + recipe.getIngredientList().get(i));
         }
         System.out.printf("Instructions: %s\n", recipe.getInstructions());
 
         System.out.println();
+
+        RecipePopup.jFramePopup(recipe);
+    }
+
+    // Get a formatted String output in JFrame
+    public String getIngredientOutput() {
+        String result = "<html>";
+
+        for (int i = 0; i < getIngredientList().size(); i++) {
+            String point = i + 1 + ". ";
+            result += "<br/>" + point + getIngredientList().get(i);
+        }
+
+        result += "</html>";
+
+        return result;
+    }
+
+    // Get a formatted String output in JFrame
+    public String getInstructionOutput() {
+        String result = "<html>";
+
+        result += getInstructions();
+
+        result += "</html>";
+
+        return result;
     }
 
     public String getId() {
