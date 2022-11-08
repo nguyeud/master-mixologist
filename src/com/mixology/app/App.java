@@ -19,6 +19,18 @@ public class App {
     private static String lastName;
     private static String tagLine;
 
+    // For font colors
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001b[32;1m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001b[34;1m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_BRIGHT_PURPLE = "\u001b[35;1m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
+    public static final String ANSI_RESET = "\u001B[0m";
+
     public void execute() throws IOException {
         welcome();
         verify();
@@ -28,23 +40,24 @@ public class App {
     private void welcome() {
         try {
             String greeting = Files.readString(Paths.get("WelcomeToMasterMixologist.txt"));
-            System.out.println(greeting);
+            System.out.println(ANSI_BRIGHT_PURPLE + greeting + ANSI_RESET);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+
     private void verify() throws IOException {
         Scanner keyboard = new Scanner(System.in);
 
         // This code logs the user's name and tagline
-        System.out.print("Enter user's first name: ");
+        System.out.print(ANSI_GREEN + "Enter user's first name: ");
         firstName = keyboard.next();
 
-        System.out.print("Enter user's last name: ");
+        System.out.print(ANSI_BLUE + "Enter user's last name: ");
         lastName = keyboard.next();
 
-        System.out.print("Enter user's tagline: ");
+        System.out.print(ANSI_CYAN + "Enter user's tagline: " + ANSI_RESET);
         tagLine = keyboard.next();
 
         profile = Profile.getInstance(firstName, lastName, tagLine);
@@ -288,7 +301,7 @@ public class App {
     private void goodbye() {
         try {
             String greeting = Files.readString(Paths.get("Goodbye.txt"));
-            System.out.println(greeting);
+            System.out.println(ANSI_CYAN + greeting + ANSI_RESET);
         } catch (IOException e) {
             e.printStackTrace();
         }
