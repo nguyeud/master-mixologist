@@ -9,15 +9,29 @@ import java.util.*;
 
 public class Profile implements Serializable {
     private static final long serialVersionUID = 1234L;
+    private final Map<String, User> profileMap  = new HashMap<>();
 
     private static String dataFilePath;
     private static String identifier;
 
-    private final Map<String, User> profileMap  = new HashMap<>();
+    private static String getFilePath(String firstName, String lastName, String tagline) {
+        String filePath = "data/";
+
+        filePath += firstName + "-" + lastName + "-" + tagline + ".dat";
+
+        return filePath;
+    }
+
+    private static String createIdentifier(String firstName, String lastName, String tagline) {
+        identifier = firstName + "-" + lastName + "-" + tagline;
+
+        return identifier;
+    }
 
     // No outside instantiation - getInstance() is the sole access point
     private Profile() {}
 
+    // Get instance of Profile at welcome screen
     public static Profile getInstance(String firstName, String lastName, String tagline) {
         Profile profile = null;
 
@@ -45,6 +59,7 @@ public class Profile implements Serializable {
         return profile;
     }
 
+    // Verify if the profile exists as a .dat file
     public static boolean verifyProfileExistence() {
         boolean exists = false;
 
@@ -53,20 +68,6 @@ public class Profile implements Serializable {
         }
 
         return exists;
-    }
-
-    private static String getFilePath(String firstName, String lastName, String tagline) {
-        String filePath = "data/";
-
-        filePath += firstName + "-" + lastName + "-" + tagline + ".dat";
-
-        return filePath;
-    }
-
-    private static String createIdentifier(String firstName, String lastName, String tagline) {
-        identifier = firstName + "-" + lastName + "-" + tagline;
-
-        return identifier;
     }
 
     public void updateProfile(String firstName, String lastName, String tagLine, Recipe recipe, String id) {
