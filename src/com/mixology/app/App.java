@@ -54,7 +54,7 @@ public class App {
         boolean validInput = false;
 
         while (!validInput) {
-            System.out.println("What would you like to do? [S]earch, [F]avorites, or [E]xit: ");
+            System.out.print("What would you like to do? [S]earch, [F]avorites, or [E]xit: ");
 
             String input = scanner.nextLine().trim().toUpperCase();
 
@@ -82,7 +82,7 @@ public class App {
         while (!validInput) {
 
             if ("F".equals(id)) {
-                System.out.println("What would you like to do?\nEnter the ID of the drink to show the recipe," +
+                System.out.print("What would you like to do?\nEnter the ID of the drink to show the recipe," +
                         " [H] to go home, or [E] to exit: ");
                 String input = scanner.nextLine().trim().toUpperCase();
                 if (input.matches("H|E")) {
@@ -101,7 +101,7 @@ public class App {
                     validInput = true;
                 }
             } else {
-                System.out.println("What would you like to do?\nEnter the ID of the drink to show the recipe, [B]" +
+                System.out.print("What would you like to do?\nEnter the ID of the drink to show the recipe, [B]" +
                         " to go back to search, [H] to go home, or [E] to exit: ");
                 String input = scanner.nextLine().trim().toUpperCase();
 
@@ -133,7 +133,7 @@ public class App {
         while (!validInput) {
 
             if ("F".equals(id)) {
-                System.out.println("What would you like to do?\nEnter [D] to delete the recipe, [F]" +
+                System.out.print("What would you like to do?\nEnter [D] to delete the recipe, [F]" +
                         " to go back to favorites, [H] to go home, or [E] to exit: ");
                 String input = scanner.nextLine().trim().toUpperCase();
 
@@ -152,13 +152,12 @@ public class App {
                             break;
                         case "D":
                             updateProfile(firstName, lastName, tagLine, recipe, "D");
-                            System.out.println("Successfully deleted recipe from favorites.");
                             showFaves();
                             break;
                     }
                 }
             } else {
-                System.out.println("What would you like to do?\nEnter [S] to save the recipe, [B]" +
+                System.out.print("What would you like to do?\nEnter [S] to save the recipe, [B]" +
                         " to go back to search, [H] to go home, or [E] to exit: ");
                 String input = scanner.nextLine().trim().toUpperCase();
 
@@ -174,7 +173,6 @@ public class App {
                             break;
                         case "S":
                             updateProfile(firstName, lastName, tagLine, recipe, "S");
-                            System.out.println("Successfully added recipe to favorites.");
                             promptForActionFromHome();
                             break;
                         case "E":
@@ -194,7 +192,7 @@ public class App {
         boolean validInput = false;
 
         while (!validInput) {
-            System.out.println("Would you like to search by [C]ocktail name or [I]ngredient: ");
+            System.out.print("Would you like to search by [C]ocktail name or [I]ngredient: ");
 
             String input = scanner.nextLine().trim().toUpperCase();
 
@@ -218,7 +216,7 @@ public class App {
         boolean validInput = false;
 
         while (!validInput) {
-            System.out.println("Enter cocktail name: ");
+            System.out.print("Enter cocktail name: ");
             String input = scanner.nextLine().trim();
 
             cocktails = SearchRequest.sendRequest(input);
@@ -237,7 +235,7 @@ public class App {
         boolean validInput = false;
 
         while (!validInput) {
-            System.out.println("Enter ingredient name: ");
+            System.out.print("Enter ingredient name: ");
             String input = scanner.nextLine().trim();
 
             cocktails = IngredientRequest.sendRequest(input);

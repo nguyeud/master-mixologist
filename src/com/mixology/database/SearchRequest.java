@@ -61,7 +61,7 @@ public class SearchRequest {
     }
 
     public static void showCocktail(String input, Map<String, String> cocktails) {
-        System.out.println("SEARCH RESULTS FOR: " + input.toUpperCase());
+        System.out.println("\nSEARCH RESULTS FOR: " + input.toUpperCase());
 
         System.out.println("===================");
 
@@ -79,5 +79,7 @@ public class SearchRequest {
         for (Map.Entry<String, String> entry : cocktails.entrySet()) {
             System.out.printf("%-8s | %-10s\n", entry.getKey(), entry.getValue());
         }
+
+        System.out.println();
     }
 }

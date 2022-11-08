@@ -25,7 +25,7 @@ public class Recipe implements Serializable {
     }
 
     public void showRecipe(String input, Recipe recipe) {
-        System.out.println(recipe.getName().toUpperCase() + " RECIPE");
+        System.out.println("\n" + recipe.getName().toUpperCase() + " RECIPE");
 
         String border = "=";
         System.out.printf("=======%s\n", border.repeat(recipe.getName().length()));
@@ -38,6 +38,8 @@ public class Recipe implements Serializable {
             System.out.println(point + recipe.getIngredientList().get(i));
         }
         System.out.printf("Instructions: %s\n", recipe.getInstructions());
+
+        System.out.println();
     }
 
     public String getId() {

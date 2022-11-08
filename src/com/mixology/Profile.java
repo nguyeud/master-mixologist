@@ -29,7 +29,9 @@ public class Profile implements Serializable {
             try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(dataFilePath))) {
                 profile = (Profile) in.readObject();
 
-                System.out.printf("WELCOME BACK %s %s #%s! :)\n", firstName.toUpperCase(), lastName.toUpperCase(),
+                System.out.printf("\nWELCOME BACK %s %s #%s! :)\n\n",
+                        firstName.toUpperCase(),
+                        lastName.toUpperCase(),
                         tagline.toUpperCase());
             } catch (Exception e) {
                 e.printStackTrace();
@@ -37,7 +39,7 @@ public class Profile implements Serializable {
         } else {
             profile = new Profile();
 
-            System.out.println("WELCOME NEW MEMBER! THANK YOU FOR REGISTERING! :).\n");
+            System.out.println("\nWELCOME NEW MEMBER! THANK YOU FOR REGISTERING! :).\n\n");
         }
 
         return profile;
@@ -70,7 +72,6 @@ public class Profile implements Serializable {
         if ("S".equals(id)) {
             user.saveRecipe(recipe);
         } else if ("D".equals(id)) {
-            System.out.println(recipe);
             user.deleteRecipe(recipe);
         }
 
@@ -91,10 +92,10 @@ public class Profile implements Serializable {
         boolean isEmpty = false;
 
         if (user.getRecipes().isEmpty()) {
-            System.out.println("You do not have any saved favorites!");
+            System.out.println("\nYou do not have any saved favorites!\n");
             isEmpty = true;
         } else {
-            System.out.println("FAVORITE COCKTAILS");
+            System.out.println("\nFAVORITE COCKTAILS");
             System.out.println("==================");
 
             List<Integer> stringLength = new ArrayList<>();
@@ -110,6 +111,8 @@ public class Profile implements Serializable {
             for (Recipe recipe : user.getRecipes()) {
                 System.out.printf("%-8s | %-10s\n", recipe.getId(), recipe.getName());
             }
+
+            System.out.println();
         }
 
         return isEmpty;

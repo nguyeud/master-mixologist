@@ -23,11 +23,19 @@ public class User implements Serializable {
     }
 
     public void saveRecipe(Recipe recipe) {
-        recipes.add(recipe);
+        boolean inList = recipes.stream().anyMatch(r -> r.getId().equals(recipe.getId()));
+
+        if (inList) {
+            System.out.println("\nRecipe is already in your favorites!\n");
+        } else {
+            recipes.add(recipe);
+            System.out.println("\nSuccessfully added recipe to favorites.\n");
+        }
     }
 
     public void deleteRecipe(Recipe recipe) {
         recipes.removeIf(recipes -> Objects.equals(recipes.getId(), recipe.getId()));
+        System.out.println("\nSuccessfully deleted recipe from favorites.");
     }
 
     public String getIdentifier() {
