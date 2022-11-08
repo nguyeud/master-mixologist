@@ -7,8 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class SearchRequest {
     // Fields
@@ -59,5 +58,26 @@ public class SearchRequest {
         }
 
         return map;
+    }
+
+    public static void showCocktail(String input, Map<String, String> cocktails) {
+        System.out.println("SEARCH RESULTS FOR: " + input.toUpperCase());
+
+        System.out.println("========================");
+
+        List<Integer> cocktailLength = new ArrayList<>();
+        for (String cocktail : cocktails.values()) {
+            cocktailLength.add(cocktail.length());
+        }
+
+        int maxLength = Collections.max(cocktailLength);
+
+        System.out.printf("%-8s | %-10s\n", "ID", "Cocktail");
+        String border = "=";
+        System.out.printf("=========|%s\n", border.repeat(maxLength));
+
+        for (Map.Entry<String, String> entry : cocktails.entrySet()) {
+            System.out.printf("%-8s | %-10s\n", entry.getKey(), entry.getValue());
+        }
     }
 }

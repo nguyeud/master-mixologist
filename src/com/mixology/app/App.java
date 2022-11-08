@@ -1,43 +1,28 @@
 package com.mixology.app;
 
-import com.apps.util.Prompter;
-import com.mixology.Favorites;
-import com.mixology.RegisteredUsers;
-import com.mixology.UnregisteredUser;
+import com.mixology.*;
 import com.mixology.database.IdRequest;
 import com.mixology.database.IngredientRequest;
 import com.mixology.database.Recipe;
-import com.mixology.database.Recipe.*;
 import com.mixology.database.SearchRequest;
-import com.mixology.database.SearchRequest.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
-import static com.mixology.RegisteredUsers.ReadcsvFile;
-import static com.mixology.RegisteredUsers.VerifyUser;
-import static com.mixology.RegisteredUsers.*;
-
 public class App {
     private static final Scanner scanner = new Scanner(System.in);
-    private final Prompter prompter = new Prompter(new Scanner(System.in));
-    private final String guest = UnregisteredUser.getName();
+    private static Profile profile;
 
-    private final Favorites favorites = Favorites.getInstance();
-
-
+    private static String firstName;
+    private static String lastName;
+    private static String tagLine;
 
     public void execute() throws IOException {
         welcome();
-        registeredNew();
-//        search();
-//        showResults();
-//        save(); // would you like to save
-//        restart(); // prompt User to search again
+        verify();
         promptForActionFromHome();
-//        goodbye();
     }
 
     private void welcome() {
@@ -49,22 +34,20 @@ public class App {
         }
     }
 
-    private void registeredNew() throws IOException {
+    private void verify() throws IOException {
         Scanner keyboard = new Scanner(System.in);
 
+        // This code logs the user's name and tagline
         System.out.print("Enter user's first name: ");
-        String first = keyboard.next();
+        firstName = keyboard.next();
 
         System.out.print("Enter user's last name: ");
-        String last = keyboard.next();
+        lastName = keyboard.next();
 
         System.out.print("Enter user's tagline: ");
-        String tag = keyboard.next();
+        tagLine = keyboard.next();
 
-        RegisteredUsers newUser =new RegisteredUsers(first, last, tag);
-
-        ReadcsvFile();
-        VerifyUser(newUser);
+        profile = Profile.getInstance(firstName, lastName, tagLine);
     }
 
     private void promptForActionFromHome() {
@@ -80,7 +63,7 @@ public class App {
 
                 switch (input) {
                     case "S":
-                        promptForSearchType();
+                        promptForCocktail();
                         break;
                     case "F":
                         showFaves();
@@ -93,85 +76,118 @@ public class App {
         }
     }
 
-    private  void promptForActionFromSearch(Map<String, String> cocktails) {
+    private void promptForActionFromSearch(Map<String, String> cocktails, String id) {
         boolean validInput = false;
 
         while (!validInput) {
-            System.out.println("What would you like to do?\nEnter the ID of the drink to show the recipe, [B]" +
-                    " to go back to search, [H] to go home, or [E] to exit: ");
-            String input = scanner.nextLine().trim().toUpperCase();
 
-            if (input.matches("B|H|E")) {
-                validInput = true;
+            if ("F".equals(id)) {
+                System.out.println("What would you like to do?\nEnter the ID of the drink to show the recipe," +
+                        " [H] to go home, or [E] to exit: ");
+                String input = scanner.nextLine().trim().toUpperCase();
+                if (input.matches("H|E")) {
+                    validInput = true;
 
-                switch (input) {
-                    case "B":
-                        promptForSearchType();
-                        break;
-                    case "H":
-                        promptForActionFromHome();
-                        break;
-                    case "E":
-                        goodbye();
-                        break;
+                    switch (input) {
+                        case "H":
+                            promptForActionFromHome();
+                            break;
+                        case "E":
+                            goodbye();
+                            break;
+                    }
+                } else {
+                    promptForId(input, cocktails, id);
+                    validInput = true;
                 }
             } else {
-                promptForId(input, cocktails);
-                validInput = true;
-            }
-        }
-    }
+                System.out.println("What would you like to do?\nEnter the ID of the drink to show the recipe, [B]" +
+                        " to go back to search, [H] to go home, or [E] to exit: ");
+                String input = scanner.nextLine().trim().toUpperCase();
 
-    private  void promptForActionFromSRecipe(Recipe recipe, RegisteredUsers user) {
-        boolean validInput = false;
+                if (input.matches("B|H|E")) {
+                    validInput = true;
 
-        while (!validInput) {
-            System.out.println("What would you like to do?\nEnter [S] to save the recipe, [B]" +
-                    " to go back to search, [H] to go home, or [E] to exit: ");
-            String input = scanner.nextLine().trim().toUpperCase();
-
-            if (input.matches("B|H|S|E")) {
-                validInput = true;
-
-                switch(input) {
-                    case "B":
-                        promptForSearchType();
-                        break;
-                    case "H":
-                        promptForActionFromHome();
-                        break;
-                    case "S":
-                        update(user.getFirstName(), Recipe.getName()); // working on this
-                        // TODO: favorites.update(); // working on this
-                        break;
-                    case "E":
-                        goodbye();
-                        break;
+                    switch (input) {
+                        case "B":
+                            promptForCocktail();
+                            break;
+                        case "H":
+                            promptForActionFromHome();
+                            break;
+                        case "E":
+                            goodbye();
+                            break;
+                    }
+                } else {
+                    promptForId(input, cocktails, id);
+                    validInput = true;
                 }
             }
         }
     }
 
-    private void promptForSearchType() {
+    private void promptForActionFromRecipe(Recipe recipe, String id) {
         boolean validInput = false;
 
         while (!validInput) {
-            System.out.println("Would you like to search by [C]ocktail name or [I]ngredient: ");
-            String input = scanner.nextLine().trim().toUpperCase();
 
-            if (input.matches("C|I")) {
-                validInput = true;
+            if ("F".equals(id)) {
+                System.out.println("What would you like to do?\nEnter [D] to delete the recipe, [F]" +
+                        " to go back to favorites, [H] to go home, or [E] to exit: ");
+                String input = scanner.nextLine().trim().toUpperCase();
 
-                switch (input) {
-                    case "C":
-                        promptForCocktail();
-                        break;
-                    case "I":
-                        promptForIngredient();
-                        break;
+                if (input.matches("D|F|H|E")) {
+                    validInput = true;
+
+                    switch(input) {
+                        case "H":
+                            promptForActionFromHome();
+                            break;
+                        case "E":
+                            goodbye();
+                            break;
+                        case "F":
+                            showFaves();
+                            break;
+                        case "D":
+                            updateProfile(firstName, lastName, tagLine, recipe, "D");
+                            System.out.println("Successfully deleted recipe from favorites.");
+                            showFaves();
+                            break;
+                    }
+                }
+            } else {
+                System.out.println("What would you like to do?\nEnter [S] to save the recipe, [B]" +
+                        " to go back to search, [H] to go home, or [E] to exit: ");
+                String input = scanner.nextLine().trim().toUpperCase();
+
+                if (input.matches("B|H|S|E")) {
+                    validInput = true;
+
+                    switch(input) {
+                        case "B":
+                            promptForCocktail();
+                            break;
+                        case "H":
+                            promptForActionFromHome();
+                            break;
+                        case "S":
+                            updateProfile(firstName, lastName, tagLine, recipe, "S");
+                            System.out.println("Successfully added recipe to favorites.");
+                            promptForActionFromHome();
+                            break;
+                        case "E":
+                            goodbye();
+                            break;
+                    }
                 }
             }
         }
+    }
+
+    private void updateProfile(String firstName, String lastName, String tagLine, Recipe recipe, String id) {
+        profile.updateProfile(firstName, lastName, tagLine, recipe, id);
     }
 
     private void promptForCocktail() {
@@ -185,7 +201,7 @@ public class App {
             cocktails = SearchRequest.sendRequest(input);
 
             if (!cocktails.isEmpty()) {
-                showCocktail(input, cocktails);
+                showCocktail(input, cocktails, "S");
                 validInput = true;
             } else {
                 System.out.printf("No search results for %s were found. ", input);
@@ -193,47 +209,7 @@ public class App {
         }
     }
 
-    private  void promptForIngredient() {
-        Map<String, String> cocktails = null;
-        boolean validInput = false;
-
-        while (!validInput) {
-            System.out.println("Enter an ingredient: ");
-            String input = scanner.nextLine().trim();
-
-            cocktails = IngredientRequest.sendRequest(input);
-
-            if (!cocktails.isEmpty()) {
-                showCocktail(input, cocktails);
-                validInput = true;
-            } else {
-                System.out.printf("No search results for %s were found. ", input);
-            }
-        }
-    }
-
-    private  void showCocktail(String input, Map<String, String> cocktails) {
-        System.out.println("Search results for: " + input);
-
-        List<Integer> cocktailLength = new ArrayList<>();
-        for (String cocktail : cocktails.values()) {
-            cocktailLength.add(cocktail.length());
-        }
-
-        int maxLength = Collections.max(cocktailLength);
-
-        System.out.printf("%-8s | %-10s\n", "ID", "Cocktail");
-        String border = "=";
-        System.out.printf("=========|%s\n", border.repeat(maxLength));
-
-        for (Map.Entry<String, String> entry : cocktails.entrySet()) {
-            System.out.printf("%-8s | %-10s\n", entry.getKey(), entry.getValue());
-        }
-
-        promptForActionFromSearch(cocktails);
-    }
-
-    private void promptForId(String input, Map<String, String> cocktails) {
+    private void promptForId(String input, Map<String, String> cocktails, String id) {
         Recipe recipe = null;
         boolean validInput = false;
 
@@ -242,58 +218,29 @@ public class App {
                 recipe = IdRequest.sendRequest(Integer.parseInt(input));
                 validInput = true;
             } else {
-                promptForActionFromSearch(cocktails);
+                promptForActionFromSearch(cocktails, id);
             }
         }
-        showRecipe(input, recipe);
+
+        showRecipe(input, recipe, id);
     }
 
-    private void showRecipe(String input, Recipe recipe) {
-        System.out.println(recipe.getName().toUpperCase() + " RECIPE");
+    private void showCocktail(String input, Map<String, String> cocktails, String id) {
+        SearchRequest.showCocktail(input, cocktails);
 
-        String border = "=";
-        System.out.printf("=======%s\n", border.repeat(recipe.getName().length()));
-
-        System.out.printf("Category: %s\n", recipe.getCategory());
-        System.out.printf("Alcoholic: %s\n", recipe.isAlcoholic());
-        System.out.println("Ingredients:");
-        for (int i = 0; i < recipe.getIngredientList().size(); i++) {
-            String point = String.valueOf(i + 1) + ". ";
-            System.out.println(point + recipe.getIngredientList().get(i));
-        }
-        System.out.printf("Instructions: %s\n", recipe.getInstructions());
-
-        promptForActionFromSRecipe(recipe);
+        promptForActionFromSearch(cocktails, id);
     }
 
+    private void showRecipe(String input, Recipe recipe, String id) {
+        recipe.showRecipe(input, recipe);
 
-//    private void showResults() {
-//    }
-//
-//    private void save() {
-//    }
-
-//    private void restart() {
-//        String input = prompter.prompt(
-//                "Would you like to search again? Y/N "
-//        ).trim().toUpperCase();
-//
-//        if ("Y".equals(input)){
-//            search();
-//            restart();
-//        }
-//    }
-
-    private void update(String firstName, Recipe recipeName) {
-        favorites.update(firstName, recipeName);
+        promptForActionFromRecipe(recipe, id);
     }
 
+    private void showFaves() {
+        profile.showFavorites();
 
-
-
-    private  void showFaves() {
-
-        favorites.showFaves();
+        promptForActionFromSearch(profile.getFavorites(), "F");
     }
 
     private void goodbye() {

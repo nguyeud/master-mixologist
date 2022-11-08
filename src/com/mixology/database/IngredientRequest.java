@@ -40,6 +40,7 @@ public class IngredientRequest {
                 InputStreamReader inputStreamReader = new InputStreamReader((InputStream) request.getContent());
 
                 // Map to JSON objects
+                System.out.println(inputStreamReader.read());
                 JSONObject dataObj = (JSONObject) new JSONParser().parse(inputStreamReader);
 
                 // Get the required object from the above create object

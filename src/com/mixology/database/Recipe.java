@@ -1,8 +1,9 @@
 package com.mixology.database;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Recipe {
+public class Recipe implements Serializable {
     private String id;
     private String name;
     private String category;
@@ -20,6 +21,22 @@ public class Recipe {
         setInstructions(instructions);
         setAlcoholic(isAlcoholic);
         setImage(image);
+    }
+
+    public void showRecipe(String input, Recipe recipe) {
+        System.out.println(recipe.getName().toUpperCase() + " RECIPE");
+
+        String border = "=";
+        System.out.printf("=======%s\n", border.repeat(recipe.getName().length()));
+
+        System.out.printf("Category: %s\n", recipe.getCategory());
+        System.out.printf("Alcoholic: %s\n", recipe.isAlcoholic());
+        System.out.println("Ingredients:");
+        for (int i = 0; i < recipe.getIngredientList().size(); i++) {
+            String point = String.valueOf(i + 1) + ". ";
+            System.out.println(point + recipe.getIngredientList().get(i));
+        }
+        System.out.printf("Instructions: %s\n", recipe.getInstructions());
     }
 
     public String getId() {
