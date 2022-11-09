@@ -15,6 +15,10 @@ public class User implements Serializable {
     private String tagline;
     private final List<Recipe> recipes = new ArrayList<>();
 
+    // For font colors
+    public static final String ANSI_GREEN = "\u001b[32;1m";
+    public static final String ANSI_RESET = "\u001B[0m";
+
     public User(String identifier, String firstName, String lastName, String tagline) {
         this.identifier = identifier;
         setFirstName(firstName);
@@ -26,16 +30,16 @@ public class User implements Serializable {
         boolean inList = recipes.stream().anyMatch(r -> r.getId().equals(recipe.getId()));
 
         if (inList) {
-            System.out.println("\nRecipe is already in your favorites!\n");
+            System.out.println(ANSI_GREEN+ "\nRecipe is already in your favorites!\n" + ANSI_RESET);
         } else {
             recipes.add(recipe);
-            System.out.println("\nSuccessfully added recipe to favorites.\n");
+            System.out.println(ANSI_GREEN+ "\nSuccessfully added recipe to favorites.\n" + ANSI_RESET);
         }
     }
 
     public void deleteRecipe(Recipe recipe) {
         recipes.removeIf(recipes -> Objects.equals(recipes.getId(), recipe.getId()));
-        System.out.println("\nSuccessfully deleted recipe from favorites.");
+        System.out.println(ANSI_GREEN+ "\nSuccessfully deleted recipe from favorites." + ANSI_RESET);
     }
 
     public String getIdentifier() {

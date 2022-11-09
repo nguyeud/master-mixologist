@@ -53,13 +53,13 @@ public class App {
         Scanner keyboard = new Scanner(System.in);
 
         // This code logs the user's name and tagline
-        System.out.print(ANSI_GREEN + "Enter user's first name: ");
+        System.out.print(ANSI_BLUE + "Enter user's first name: ");
         firstName = keyboard.next();
 
-        System.out.print(ANSI_BLUE + "Enter user's last name: ");
+        System.out.print("Enter user's last name: ");
         lastName = keyboard.next();
 
-        System.out.print(ANSI_CYAN + "Enter user's tagline: " + ANSI_RESET);
+        System.out.print("Enter user's tagline: ");
         tagLine = keyboard.next();
 
         profile = Profile.getInstance(firstName, lastName, tagLine);
@@ -71,7 +71,7 @@ public class App {
 
         while (!validInput) {
             if (profileExists) {
-                System.out.print("What would you like to do? [S]earch, [F]avorites, or [E]xit: ");
+                System.out.print(ANSI_CYAN + "What would you like to do? [S]earch, [F]avorites, or [E]xit: " + ANSI_RESET);
 
                 String input = scanner.nextLine().trim().toUpperCase();
 
@@ -91,7 +91,7 @@ public class App {
                     }
                 }
             } else {
-                System.out.print("What would you like to do? [S]earch or [E]xit: ");
+                System.out.print(ANSI_CYAN +"What would you like to do? [S]earch or [E]xit: " + ANSI_RESET);
 
                 String input = scanner.nextLine().trim().toUpperCase();
 
@@ -117,8 +117,8 @@ public class App {
         while (!validInput) {
 
             if ("F".equals(id)) {
-                System.out.print("What would you like to do?\nEnter the ID of the drink to show the recipe," +
-                        " [H] to go home, or [E] to exit: ");
+                System.out.print(ANSI_CYAN + "What would you like to do?\nEnter the ID of the drink to show the recipe," +
+                        " [H] to go home, or [E] to exit: " + ANSI_RESET);
                 String input = scanner.nextLine().trim().toUpperCase();
                 if (input.matches("H|E")) {
                     validInput = true;
@@ -136,8 +136,8 @@ public class App {
                     validInput = true;
                 }
             } else {
-                System.out.print("What would you like to do?\nEnter the ID of the drink to show the recipe, [B]" +
-                        " to go back to search, [H] to go home, or [E] to exit: ");
+                System.out.print(ANSI_CYAN + "What would you like to do?\nEnter the ID of the drink to show the recipe, [B]" +
+                        " to go back to search, [H] to go home, or [E] to exit: " + ANSI_RESET);
                 String input = scanner.nextLine().trim().toUpperCase();
 
                 if (input.matches("B|H|E")) {
@@ -168,8 +168,8 @@ public class App {
         while (!validInput) {
 
             if ("F".equals(id)) {
-                System.out.print("What would you like to do?\nEnter [D] to delete the recipe, [F]" +
-                        " to go back to favorites, [H] to go home, or [E] to exit: ");
+                System.out.print(ANSI_CYAN + "What would you like to do?\nEnter [D] to delete the recipe, [F]" +
+                        " to go back to favorites, [H] to go home, or [E] to exit: " + ANSI_RESET);
                 String input = scanner.nextLine().trim().toUpperCase();
 
                 if (input.matches("D|F|H|E")) {
@@ -192,8 +192,8 @@ public class App {
                     }
                 }
             } else {
-                System.out.print("What would you like to do?\nEnter [S] to save the recipe, [B]" +
-                        " to go back to search, [H] to go home, or [E] to exit: ");
+                System.out.print(ANSI_CYAN + "What would you like to do?\nEnter [S] to save the recipe, [B]" +
+                        " to go back to search, [H] to go home, or [E] to exit: " + ANSI_RESET);
                 String input = scanner.nextLine().trim().toUpperCase();
 
                 if (input.matches("B|H|S|E")) {
@@ -227,7 +227,7 @@ public class App {
         boolean validInput = false;
 
         while (!validInput) {
-            System.out.print("Would you like to search by [C]ocktail name or [I]ngredient: ");
+            System.out.print(ANSI_CYAN + "Would you like to search by [C]ocktail name or [I]ngredient: " + ANSI_RESET);
 
             String input = scanner.nextLine().trim().toUpperCase();
 
@@ -251,7 +251,7 @@ public class App {
         boolean validInput = false;
 
         while (!validInput) {
-            System.out.print("Enter cocktail name: ");
+            System.out.print(ANSI_CYAN + "Enter cocktail name: " + ANSI_RESET);
             String input = scanner.nextLine().trim();
 
             cocktails = SearchRequest.sendRequest(input);
@@ -260,7 +260,7 @@ public class App {
                 showCocktail(input, cocktails, "S");
                 validInput = true;
             } else {
-                System.out.printf("No search results for %s were found. ", input);
+                System.out.printf(ANSI_RED + "No search results for %s were found. " + ANSI_RESET, input);
             }
         }
     }
@@ -270,7 +270,7 @@ public class App {
         boolean validInput = false;
 
         while (!validInput) {
-            System.out.print("Enter ingredient name: ");
+            System.out.print(ANSI_CYAN + "Enter ingredient name: " + ANSI_RESET);
             String input = scanner.nextLine().trim();
 
             cocktails = IngredientRequest.sendRequest(input);
@@ -279,7 +279,7 @@ public class App {
                 showCocktail(input, cocktails, "S");
                 validInput = true;
             } else {
-                System.out.printf("No search results for %s were found. ", input);
+                System.out.printf(ANSI_RED + "No search results for %s were found. " + ANSI_RESET, input);
             }
         }
     }
@@ -323,7 +323,7 @@ public class App {
     private void goodbye() {
         try {
             String greeting = Files.readString(Paths.get("Goodbye.txt"));
-            System.out.println(ANSI_CYAN + greeting + ANSI_RESET);
+            System.out.println(ANSI_BRIGHT_PURPLE + greeting + ANSI_RESET);
             System.exit(0);
         } catch (IOException e) {
             e.printStackTrace();

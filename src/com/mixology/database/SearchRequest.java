@@ -9,7 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
 
-import static com.mixology.app.App.clearConsole;
+import static com.mixology.app.App.*;
 
 public class SearchRequest {
     // Fields
@@ -65,7 +65,7 @@ public class SearchRequest {
     }
 
     public static void showCocktail(String input, Map<String, String> cocktails) {
-        System.out.println("\nSEARCH RESULTS FOR: " + input.toUpperCase());
+        System.out.println(ANSI_YELLOW+ "\nSEARCH RESULTS FOR: " + input.toUpperCase());
 
         System.out.println("===================");
 
