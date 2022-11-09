@@ -7,7 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
-import static com.mixology.app.App.clearConsole;
+import static com.mixology.app.App.*;
 
 public class Profile implements Serializable {
     private static final long serialVersionUID = 1234L;
@@ -45,7 +45,7 @@ public class Profile implements Serializable {
             try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(dataFilePath))) {
                 profile = (Profile) in.readObject();
 
-                System.out.printf("\nWELCOME BACK %s %s #%s! :)\n\n",
+                System.out.printf(ANSI_BRIGHT_PURPLE + "\nWELCOME BACK %s %s #%s! :)\n\n" + ANSI_RESET,
                         firstName.toUpperCase(),
                         lastName.toUpperCase(),
                         tagline.toUpperCase());
@@ -55,7 +55,7 @@ public class Profile implements Serializable {
         } else {
             profile = new Profile();
 
-            System.out.println("\nWELCOME NEW MEMBER! THANK YOU FOR REGISTERING! :)\n");
+            System.out.println(ANSI_BRIGHT_PURPLE + "\nWELCOME NEW MEMBER! THANK YOU FOR REGISTERING! :)\n" + ANSI_RESET);
         }
 
         return profile;
@@ -104,12 +104,12 @@ public class Profile implements Serializable {
         boolean isEmpty = false;
 
         if (user.getRecipes().isEmpty()) {
-            System.out.println("\nYou do not have any saved favorites!\n");
+            System.out.println(ANSI_RED + "\nYou do not have any saved favorites!\n" + ANSI_RESET);
             isEmpty = true;
         } else {
             clearConsole();
 
-            System.out.println("\nFAVORITE COCKTAILS");
+            System.out.println(ANSI_YELLOW + "\nFAVORITE COCKTAILS");
             System.out.println("==================");
 
             List<Integer> stringLength = new ArrayList<>();
@@ -123,7 +123,7 @@ public class Profile implements Serializable {
             String border = "=";
             System.out.printf("=========|%s\n", border.repeat(maxLength));
             for (Recipe recipe : user.getRecipes()) {
-                System.out.printf("%-8s | %-10s\n", recipe.getId(), recipe.getName());
+                System.out.printf("%-8s | %-10s\n" + ANSI_RESET, recipe.getId(), recipe.getName());
             }
 
             System.out.println();

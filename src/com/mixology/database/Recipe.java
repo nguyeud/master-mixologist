@@ -3,6 +3,7 @@ package com.mixology.database;
 import java.io.Serializable;
 import java.util.List;
 
+import static com.mixology.app.App.ANSI_YELLOW;
 import static com.mixology.app.App.clearConsole;
 
 public class Recipe implements Serializable {
@@ -26,7 +27,7 @@ public class Recipe implements Serializable {
     }
 
     public void showRecipe(String input, Recipe recipe) {
-        System.out.println("\n" + recipe.getName().toUpperCase() + " RECIPE");
+        System.out.println(ANSI_YELLOW + "\n" + recipe.getName().toUpperCase() + " RECIPE");
 
         String border = "=";
         System.out.printf("=======%s\n", border.repeat(recipe.getName().length()));
