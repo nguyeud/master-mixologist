@@ -41,7 +41,7 @@ public class App {
 
     private void welcome() {
         try {
-            String greeting = Files.readString(Paths.get("WelcomeToMasterMixologist.txt"));
+            String greeting = Files.readString(Paths.get("resources/WelcomeToMasterMixologist.txt"));
             System.out.println(ANSI_BRIGHT_PURPLE + greeting + ANSI_RESET);
         } catch (IOException e) {
             e.printStackTrace();
@@ -322,7 +322,7 @@ public class App {
 
     private void goodbye() {
         try {
-            String greeting = Files.readString(Paths.get("Goodbye.txt"));
+            String greeting = Files.readString(Paths.get("resources/Goodbye.txt"));
             System.out.println(ANSI_BRIGHT_PURPLE + greeting + ANSI_RESET);
             System.exit(0);
         } catch (IOException e) {
