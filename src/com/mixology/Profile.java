@@ -7,6 +7,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
+import static com.mixology.app.App.clearConsole;
+
 public class Profile implements Serializable {
     private static final long serialVersionUID = 1234L;
     private final Map<String, User> profileMap  = new HashMap<>();
@@ -105,6 +107,8 @@ public class Profile implements Serializable {
             System.out.println("\nYou do not have any saved favorites!\n");
             isEmpty = true;
         } else {
+            clearConsole();
+
             System.out.println("\nFAVORITE COCKTAILS");
             System.out.println("==================");
 

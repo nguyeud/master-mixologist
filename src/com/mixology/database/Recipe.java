@@ -3,6 +3,8 @@ package com.mixology.database;
 import java.io.Serializable;
 import java.util.List;
 
+import static com.mixology.app.App.clearConsole;
+
 public class Recipe implements Serializable {
     private String id;
     private String name;

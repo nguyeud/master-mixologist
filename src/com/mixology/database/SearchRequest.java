@@ -9,6 +9,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
 
+import static com.mixology.app.App.clearConsole;
+
 public class SearchRequest {
     // Fields
     private static final String urlString = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=";
@@ -52,6 +54,8 @@ public class SearchRequest {
                         map.put((String) newObj.get("idDrink"), (String) newObj.get("strDrink"));
                     }
                 }
+
+                clearConsole();
             }
         } catch (Exception e) {
             e.printStackTrace();

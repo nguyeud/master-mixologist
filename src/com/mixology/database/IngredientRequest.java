@@ -11,6 +11,8 @@ import java.net.URL;
 import java.util.Map;
 import java.util.TreeMap;
 
+import static com.mixology.app.App.clearConsole;
+
 public class IngredientRequest {
     // Fields
     private static final String urlString = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=";
@@ -56,6 +58,8 @@ public class IngredientRequest {
                         }
                     }
                 }
+
+                clearConsole();
             }
         } catch (Exception e) {
             e.printStackTrace();

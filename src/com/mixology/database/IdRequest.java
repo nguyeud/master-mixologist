@@ -11,6 +11,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mixology.app.App.clearConsole;
+
 public class IdRequest {
     // Fields
     private static final String urlString = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=";
@@ -69,6 +71,8 @@ public class IdRequest {
                 }
 
                 recipe = new Recipe(rId, rName, rCategory, rIngredients, rInstructions, rIsAlcoholic, rImage);
+
+                clearConsole();
             }
         } catch (Exception e) {
             e.printStackTrace();
