@@ -1,5 +1,6 @@
 package com.mixology.database;
 
+import com.apps.util.Console;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -10,8 +11,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.mixology.app.App.clearConsole;
 
 public class IdRequest {
     // Fields
@@ -72,7 +71,7 @@ public class IdRequest {
 
                 recipe = new Recipe(rId, rName, rCategory, rIngredients, rInstructions, rIsAlcoholic, rImage);
 
-                clearConsole();
+                Console.clear();
             }
         } catch (Exception e) {
             e.printStackTrace();

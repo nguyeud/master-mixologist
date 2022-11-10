@@ -1,7 +1,7 @@
 package com.mixology;
 
 import com.mixology.database.Recipe;
-
+import com.apps.util.Console;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -107,7 +107,7 @@ public class Profile implements Serializable {
             System.out.println(ANSI_RED + "\nYou do not have any saved favorites!\n" + ANSI_RESET);
             isEmpty = true;
         } else {
-            clearConsole();
+            Console.clear();
 
             System.out.println(ANSI_YELLOW + "\nFAVORITE COCKTAILS");
             System.out.println("==================");

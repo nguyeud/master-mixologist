@@ -115,6 +115,8 @@ class RecipePopup {
             c.gridy = 5;
             frame.add(instruction, c);
 
+            frame.toFront();
+            frame.setLocationRelativeTo(null);
             frame.setVisible(true);
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 

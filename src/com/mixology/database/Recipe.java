@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import static com.mixology.app.App.ANSI_YELLOW;
-import static com.mixology.app.App.clearConsole;
 
 public class Recipe implements Serializable {
     private String id;

@@ -1,5 +1,6 @@
 package com.mixology.database;
 
+import com.apps.util.Console;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -10,8 +11,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 import java.util.TreeMap;
-
-import static com.mixology.app.App.clearConsole;
 
 public class IngredientRequest {
     // Fields
@@ -59,7 +58,7 @@ public class IngredientRequest {
                     }
                 }
 
-                clearConsole();
+                Console.clear();
             }
         } catch (Exception e) {
             e.printStackTrace();

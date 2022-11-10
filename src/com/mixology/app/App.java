@@ -14,12 +14,12 @@ import java.util.*;
 import static com.mixology.Profile.verifyProfileExistence;
 
 public class App {
-    private static final Scanner scanner = new Scanner(System.in);
-    private static Profile profile;
+    private final Scanner scanner = new Scanner(System.in);
+    private Profile profile;
 
-    private static String firstName;
-    private static String lastName;
-    private static String tagLine;
+    private String firstName;
+    private String lastName;
+    private String tagLine;
 
     // For font colors
     public static final String ANSI_BLACK = "\u001B[30m";
@@ -43,6 +43,11 @@ public class App {
         try {
             String greeting = Files.readString(Paths.get("resources/WelcomeToMasterMixologist.txt"));
             System.out.println(ANSI_BRIGHT_PURPLE + greeting + ANSI_RESET);
+            System.out.println(ANSI_BRIGHT_PURPLE + "If you like cocktails but have a hard time searching or remembers cocktails you've made, " +
+                    "this is the application for you.\nThis application searches through a web database to show you " +
+                    "different cocktails based on your search and saves them for you in a favorites section if you happen" +
+                    " to like them." + ANSI_RESET);
+            System.out.println();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -51,16 +56,39 @@ public class App {
 
     private void verify() throws IOException {
         Scanner keyboard = new Scanner(System.in);
+        boolean validInput = false;
 
         // This code logs the user's name and tagline
-        System.out.print(ANSI_BLUE + "Enter user's first name: ");
-        firstName = keyboard.next();
+        while (!validInput) {
+            System.out.print(ANSI_BLUE + "Enter user's first name: ");
+            firstName = keyboard.nextLine();
 
-        System.out.print("Enter user's last name: ");
-        lastName = keyboard.next();
+            if (firstName.length() > 0) {
+                validInput = true;
+            }
+        }
 
-        System.out.print("Enter user's tagline: ");
-        tagLine = keyboard.next();
+        validInput = false;
+
+        while (!validInput) {
+            System.out.print("Enter user's last name: ");
+            lastName = keyboard.nextLine();
+
+            if (lastName.length() > 0) {
+                validInput = true;
+            }
+        }
+
+        validInput = false;
+
+        while (!validInput) {
+            System.out.print("Enter user's tagline: ");
+            tagLine = keyboard.nextLine();
+
+            if (tagLine.length() > 0) {
+                validInput = true;
+            }
+        }
 
         profile = Profile.getInstance(firstName, lastName, tagLine);
     }
@@ -117,8 +145,8 @@ public class App {
         while (!validInput) {
 
             if ("F".equals(id)) {
-                System.out.print(ANSI_CYAN + "What would you like to do?\nEnter the ID of the drink to show the recipe," +
-                        " [H] to go home, or [E] to exit: " + ANSI_RESET);
+                System.out.print(ANSI_CYAN + "What would you like to do?\nEnter the ID of the drink to show or " +
+                        "delete the recipe, [H] to go home, or [E] to exit: " + ANSI_RESET);
                 String input = scanner.nextLine().trim().toUpperCase();
                 if (input.matches("H|E")) {
                     validInput = true;
@@ -301,7 +329,26 @@ public class App {
     }
 
     private void showCocktail(String input, Map<String, String> cocktails, String id) {
-        SearchRequest.showCocktail(input, cocktails);
+        System.out.println(ANSI_YELLOW+ "\nSEARCH RESULTS FOR: " + input.toUpperCase());
+
+        System.out.println("===================");
+
+        List<Integer> cocktailLength = new ArrayList<>();
+        for (String cocktail : cocktails.values()) {
+            cocktailLength.add(cocktail.length());
+        }
+
+        int maxLength = Collections.max(cocktailLength);
+
+        System.out.printf("%-8s | %-10s\n", "ID", "Cocktail");
+        String border = "=";
+        System.out.printf("=========|%s\n", border.repeat(maxLength));
+
+        for (Map.Entry<String, String> entry : cocktails.entrySet()) {
+            System.out.printf("%-8s | %-10s\n", entry.getKey(), entry.getValue());
+        }
+
+        System.out.println();
 
         promptForActionFromSearch(cocktails, id);
     }
@@ -326,21 +373,6 @@ public class App {
             System.out.println(ANSI_BRIGHT_PURPLE + greeting + ANSI_RESET);
             System.exit(0);
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void clearConsole()
-    {
-        try
-        {
-            final String os = System.getProperty("os.name");
-            if (os.contains("Windows")) {
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            } else {
-                Runtime.getRuntime().exec("clear");
-            }
-        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
